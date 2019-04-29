@@ -13,4 +13,5 @@
     <artifactId>java-test-bean</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
+
 </project>
