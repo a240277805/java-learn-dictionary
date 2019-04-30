@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zmk.demos</groupId>
+    <groupId>com.zmk.github</groupId>
     <artifactId>java-test-parent</artifactId>
-    <version>${java-test-version}</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>zmk 的Java 测试项目</description>
@@ -25,17 +25,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.zmk.demos</groupId>
+                <groupId>com.zmk.github</groupId>
                 <artifactId>java-test-bean</artifactId>
                 <version>${java-test-version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zmk.demos</groupId>
+                <groupId>com.zmk.github</groupId>
                 <artifactId>java-test-core</artifactId>
                 <version>${java-test-version}</version>
             </dependency>
             <dependency>
-                <groupId>com.zmk.demos</groupId>
+                <groupId>com.zmk.github</groupId>
                 <artifactId>java-test-rest</artifactId>
                 <version>${java-test-version}</version>
             </dependency>

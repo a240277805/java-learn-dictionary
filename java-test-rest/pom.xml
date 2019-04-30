@@ -4,14 +4,42 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.zmk.demos</groupId>
+        <groupId>com.zmk.github</groupId>
         <artifactId>java-test-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.zmk.demos</groupId>
+    <groupId>com.zmk.github</groupId>
     <artifactId>java-test-rest</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
+
+    <properties>
+        <start-class>com.zmk.github.JavaTestApplication</start-class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.0.7.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <props>src/main/resources/config/local.properties</props>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <build>
+
+    </build>
 
 </project>
