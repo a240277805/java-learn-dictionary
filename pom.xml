@@ -23,6 +23,7 @@
     </modules>
 
     <properties>
+        <projects.version>1.0-SNAPSHOT</projects.version>
         <java-test-version>1.0-SNAPSHOT</java-test-version>
     </properties>
 
