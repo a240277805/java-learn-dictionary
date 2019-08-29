@@ -13,5 +13,6 @@
     <artifactId>java-test-core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
-
+    <dependencies>
+    </dependencies>
 </project>
