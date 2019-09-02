@@ -2,6 +2,8 @@
 #二、ElasticSearch概念
 在读下边文章的时候 ，就越接近使用了，然后需要了解几个概念
 
+
+
 ###Node
 节点是单个服务器实例
 
@@ -12,6 +14,17 @@
 索引是具有相似特性的文档集合
 
 索引由名称（必须全部为小写）标识
+
+正排索引：从文档角度看其中的单词，表示每个文档都含有哪些单词，以及每个单词出现了多少次（词频）及其出现位置（相对于文档首部的偏移量）。
+
+倒排索引：从单词角度看文档，标识每个单词分别在那些文档中出现(文档ID)，以及在各自的文档中每个单词分别出现了多少次（词频）及其出现位置（相对于该文档首部的偏移量）。
+
+简单理解，
+```$xslt
+正排索引：id ---> value
+倒排索引：value ---> id
+```
+
 
 在一个或者多个节点直接，多个绿色小方块组合在一起形成一个ElasticSearch的索引。
 ![avatar](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/JdLkEI9sZffrWx0A45Her9bZODhNsSkt7UsZDh1aXDyoRbWWa8oHibZd8vubYzovV8qKvhgVT7lON9ErMztVIDQ/640)
