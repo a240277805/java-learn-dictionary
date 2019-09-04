@@ -1,4 +1,4 @@
-<h1>Spring bean 初始化过程 </h1>
+# Spring bean 初始化过程
 问题
 
 * 1.bean 是如何被初始化 在 bean中的
@@ -39,7 +39,7 @@ ApplicationContext 容器 ，可以认为是BeanFactory的一种扩展。
 * BeanDefinitionRegistry bean的注册中心 （将对象的定义 注册上）（注册的时候 会生成一个注册码）
 *  BeanFactory 可以取到任意定义过的Bean  （对象的出口，有就拿走，没有就生成）
 
-<h2>对象的初始化</h2>
+## 对象的初始化
 初始是通过 beanFactory的 getBean()时才进行的。
 
 * 对象不是new出来的 其实这里用到了AOP机制，生成了其代理对象，通过 反射机制 生成接口对象，或者是通过CGLIB生成子对象
@@ -48,7 +48,7 @@ ApplicationContext 容器 ，可以认为是BeanFactory的一种扩展。
 * 在完成postProcessor 之后，则会看对象是否定义了InitializingBean 接口  或者 spring还提供了另外一种指定初始化的方式，即在bean定义中指定init-method 。
 
 
-<h2>ApplicationContext</h2>
+## ApplicationContext
 
 ApplicationContext 拥有BeanFactory的所有功能，但应用方法略有不同
 

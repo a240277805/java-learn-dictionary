@@ -1,12 +1,12 @@
-<h1>Spring boot 启动篇</h1>
-<h2>WHY</h2>
+# Spring boot 启动篇
+## WHY
  为啥要写: 因为Spring boot 启动太慢了 ，想测试一个东西 可能要等他启动很久，然后看到JetCache 他的测试就很快 向大神看齐
-<h2>HOW</h2>
+## HOW
 
 * 首先要了解他启动都干了啥
 * 排除没必要的 东西 去繁就简
 * 看大神是怎么实现的
-<h2>WHAT</h2>
+## WHAT
 
 常用的几种启动方式:
 * SpringBootApplication  SpringBootApplication.run(*.class,args);

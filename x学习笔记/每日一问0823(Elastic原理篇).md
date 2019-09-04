@@ -86,10 +86,10 @@ Lucene 自然会对这个 block 再次进行压缩。其压缩方式叫做 `Fram
 
 Elasticsearch/Lucene 的解决办法是让主存储的随机读操作变得很快，从而可以充分利用索引，而不用惧怕从主存储里随机读加载几百万行带来的代价。
 
-####Opentsdb 的弱点
+#### Opentsdb 的弱点
 Opentsdb 没有索引，主存储是 `Hbase`。所有的数据点按照时间顺序排列存储在 Hbase 中。Hbase 是一种支持排序的存储引擎，其排序的方式是根据每个 row 的 rowkey（就是关系数据库里的主键的概念）。MySQL 存储时间序列的最佳实践是利用 MySQL 的 Innodb 的 clustered index 特性，使用它去模仿类似 Hbase 按 rowkey 排序的效果。所以 Opentsdb 的弱点也基本适用于 MySQL。
 
-####DocValues 为什么快？
+#### DocValues 为什么快？
 DocValues 是一种按列组织的存储格式
 
 按列存储的话会把一个文件分成多个文件，每个列一个。对于每个文件，都是按照 docid 排序的。这样一来，只要知道 docid，就可以计算出这个 docid 在这个文件里的偏移量。也就是对于每个 docid 需要一次随机读操作。
@@ -99,8 +99,8 @@ DocValues 是一种按列组织的存储格式
 那么为什么按行存储不能用 mmap 的方式呢？因为按行存储的方式一个文件里包含了很多列的数据，这个文件尺寸往往很大，超过了操作系统的文件缓存的大小。而按列存储的方式把不同列分成了很多文件，`可以只缓存用到的那些列`，而不让很少使用的列数据浪费内存。
 
 ![avatar](https://static001.infoq.cn/resource/image/aa/a5/aab78e64a7ec5c36fe347991110ed6a5.jpg)
-###分布式计算
-####分布式聚合如何做得快
+### 分布式计算
+#### 分布式聚合如何做得快
 Elasticsearch/Lucene 从最底层就支持数据分片，查询的时候可以自动把不同分片的查询结果合并起来。
 
 Elasticsearch 的 document 都有一个 uid，`默认策略是按照 uid 的 hash 把文档进行分片`。
@@ -114,7 +114,7 @@ Elasticsearch 的 document 都有一个 uid，`默认策略是按照 uid 的 has
 除此之外 Elasticsearch 还有另外一个减少聚合过程中网络传输量的优化，那就是 `Hyperloglog` 算法，Hyperloglog 算法`以一定的误差做为代价`，可以用很小的数据量保存这个 set，从而减少网络传输消耗。
 
 `这里有些解释 关于降维聚合不懂，大概讲的是查询一个时间的 最大的数的和，先做聚合 再降维，以后再看`
-###第五篇 Protobuf 有没有比 JSON 快 5 倍？
+### 第五篇 Protobuf 有没有比 JSON 快 5 倍？
 这个比较了一下 protobuf 和JSON  编解码性能问题 
 大致就是 long double 整形 protobuf 要快78倍，String字符串 或者 整数列表的话性能差不多。
 还有一些存储细节 char[] byte[]。
