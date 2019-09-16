@@ -6,6 +6,7 @@
 ## 库/表操作
 * 查看所有的数据库 show databases; ，
 * 查看当前所在数据库  select database(); 
+* 选择数据库 use 库名;
 * 查看某表 show create table 表名;
 或 show table status from db_name where name='table_name';
 * 表锁定 show status like '%table_lock%';
@@ -46,6 +47,15 @@
 * 删除slave的中继日志: reset slave;
 * 删除指定日期前的日志索引中binlog日志文件:purge master logs before '2019-03-09 14:00:00';
 * 删除指定日志文件: purge master logs to 'master.000003';
+
+## 事务 
+* 查看事务隔离级别:show  variables like 'transaction_isolation' ;(Mysql8 has renamed tx_isolation to transaction_isolation)
+* >设置事务隔离级别: mysql> set global transaction isolation level read committed; //全局的
+   mysql> set session transaction isolation level read committed; //当前会话
+* 关闭SQL语句的自动提交:set autocommit=off;
+* 查看SQL语句自动提交是否关闭:show variables like 'autocommit';  
+
+
 
 
 
