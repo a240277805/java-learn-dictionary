@@ -1,14 +1,16 @@
 # mysql 锁
 ## 锁的类型 
 
-![avatar](https://img-blog.csdn.net/20180902191802677?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L29xa2R3cw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+![avatar](https://img-blog.csdn.net/20180902191802677)
+
 分类图:
+
 ![avatar](https://pic2.zhimg.com/80/v2-eec522a8cf7d8a38eaea29192edbb2f5_hd.jpg)
 
 ![avatar](https://pic3.zhimg.com/80/v2-5cf8b96fdca1428e6f3cce863fdfa73e_hd.jpg)
 
 ![avatar](https://www.javazhiyin.com/wp-content/uploads/2019/01/java1-1547261661.jpeg)
-### Shared（乐观锁/共享锁/读锁/S锁)
+### Shared（共享锁/读锁/S锁)
 行锁
 
 若事务T对数据对象A加上S锁，则其他事务只能再对A加S锁，而不能X锁，直到T释放A上的锁。这就保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。
@@ -19,6 +21,14 @@
 若事务T对数据对象A加上X锁，则只允许T读取和修改A，其他任何事务都不能再对加任何类型的锁，知道T释放A上的锁。这就保证了其他事务在T释放A上的锁之前不能再读取和修改A。
 ### 自增锁
 > 自增锁是一种特殊的表级别锁（table-level lock），专门针对事务插入AUTO_INCREMENT类型的列。最简单的情况，如果一个事务正在往表中插入记录，所有其他事务的插入必须等待，以便第一个事务插入的行，是连续的主键值。
+
+## 记录锁
+记录锁 是最简单的行锁
+
+UPDATE accounts SET level = 100 WHERE id = 5;
+这条 SQL 语句就会在 id = 5 这条记录上加上记录锁 防止其他事务对 id = 5 这条记录进行修改或删除。
+
+注意，如果 SQL 语句无法使用索引时会走主索引实现全表扫描，这个时候 MySQL 会给整张表的所有数据行加记录锁。如果一个 WHERE 条件无法通过索引快速过滤，存储引擎层面就会将所有记录加锁后返回，再由 MySQL Server 层进行过滤。不过在实际使用过程中，MySQL 做了一些改进，在 MySQL Server 层进行过滤的时候，如果发现不满足，会调用 unlock_row 方法，把不满足条件的记录释放锁（显然这违背了二段锁协议）。这样做，保证了最后只会持有满足条件记录上的锁，但是每条记录的加锁操作还是不能省略的。可见在没有索引时，不仅会消耗大量的锁资源，增加数据库的开销，而且极大的降低了数据库的并发性能，所以说，更新操作一定要记得走索引。
 
 ## 死锁
 
@@ -41,7 +51,7 @@
 
 5）为表添加合理的索引。可以看到如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。
 
-## 什么是 两阶段锁
+## 什么是 两阶段锁？
 ### 行锁为什么需要索引？
 ### 行锁与聚簇索引的关系
 
@@ -57,3 +67,4 @@
 * `***`[MySQL优化系列（八）--锁机制超详细解析（锁分类、事务并发、引擎并发控制）](https://blog.csdn.net/jack__frost/article/details/73347688)
 * `*****`[mysql 行锁的实现](https://lanjingling.github.io/2015/10/10/mysql-hangsuo/)
 * `*****`[读《MySQL 实战》03 锁和性能](http://www.linkedkeeper.com/1332.html)
+* `*****`[MYSQL锁以及死锁的产生跟解决](http://vayi.site/2018/08/17/MYSQL_LOCK/)

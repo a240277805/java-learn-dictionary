@@ -26,6 +26,20 @@
 * 查看最大连接数量:show variables like '%max_connections%';
 * 查看超时时间:show variables like '%timeout%';
 
+* 查看引擎状态 (死锁分析，内存分析):show engine innodb status
+
+| BACKGROUND THREAD                     | 后台Master线程                                                                      |
+|---------------------------------------|---------------------------------------------------------------------------------|
+| SEMAPHORES                            | 信号量信息                                                                           |
+| LATEST DETECTED DEADLOCK              | 最近一次死锁信息，只有产生过死锁才会有                                                             |
+| TRANSACTIONS                          | 事物信息                                                                            |
+| FILE I/O                              | IO Thread信息                                                                     |
+| INSERT BUFFER AND ADAPTIVE HASH INDEX | INSERT BUFFER和自适应HASH索引                                                         |
+| LOG                                   | 日志                                                                              |
+| BUFFER POOL AND MEMORY                | BUFFER POOL和内存                                                                  |
+| INDIVIDUAL BUFFER POOL INFO           | 如果设置了多个BUFFER POOL实例，这里显示每个BUFFER POOL信息。可通过innodb\_buffer\_pool\_instances参数设置 |
+| ROW OPERATIONS‍‍                      | 行操作统计信息‍‍                                                                       |
+| END OF INNODB MONITOR OUTPU           | 输出结束语                                                                           |
 ## 引擎操作
 * 查看存储引擎  show engines;
 
@@ -54,6 +68,11 @@
    mysql> set session transaction isolation level read committed; //当前会话
 * 关闭SQL语句的自动提交:set autocommit=off;
 * 查看SQL语句自动提交是否关闭:show variables like 'autocommit';  
+
+## 参考
+
+* [mysql之show engine innodb status解读](https://www.cnblogs.com/xiaoboluo768/p/5171425.html)
+* [一条命令解读InnoDB存储引擎—show engine innodb status](https://cloud.tencent.com/developer/article/1424670)
 
 
 
