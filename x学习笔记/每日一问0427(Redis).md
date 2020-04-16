@@ -1,27 +1,104 @@
 # redis
- 1.redis  坑  
- JetCache 使用  坑
+## 基础
+### redis 简介
+存在内存中，读写速度非常快，用于缓存，分布式锁，除此之外，redis 支持事务 、持久化、LUA脚本、LRU驱动事件、多种集群方案。
 
- 配置： Jedis, 连接池5  
- 
- 
- 问题描述：在使用JetCache 获取 key 的时候 报错 [com.alicp.jetcache.AbstractCache]jetcache(RedisCache) GET error. key=61. redis.clients.jedis.exceptions.JedisConnectionException:Unexpected end of stream.
+### redis 的线程模型
+redis 内部使用 文件事件处理器 file event handler ，这个处理器是单线程的，所以叫单线程模型。采用 IO多路复用机制同时监听多个socket ，根据socket 事件选择对应的事件处理器。
 
- 处理：
- * 进行错误排查 ，发现 该key 通过 redis-cli 是可以取到的 
+文件事件处理器包括4部分:
+- 多个socket
+- IO多路复用程序
+- 文件事件分派器
+- 事件处理器(连接应答处理器/命令请求处理器/命令回复处理器)
+多个 socket 可能会并发产生不同的操作，每个操作对应不同的文件事件，但是 IO 多路复用程序会监听多个 socket，会将 socket 产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。
+![avatar](https://www.javazhiyin.com/wp-content/uploads/2018/12/redis-single-thread-model.png)
+### 为啥 redis 单线程模型也能效率这么高？
+- 纯内存操作
+- 核心是基于非阻塞的 IO 多路复用机制
+- 单线程反而避免了频繁的上下文切换
+### redis 线程模型
+内部使用 file event handler ，这个事件处理器是单线程的，所以 redis 单线程 模型，
 
- * 百度 查询异常 JedisConnectionException   Unexpected end of stream
-    找到一篇较好的文章 ：https://blog.csdn.net/aubdiy/article/details/53511410
+IO多路复用，同时监听多个socket
+### redis 和 memcached 的区别
+- redis 支持更丰富的数据类型
+- redis 支持数据的持久化  ,memercache 重启丢失
+- 集群模式 保证高可用
+- memecached 多线程 非阻塞 IO复用 模型，redis 单线程 IO多路复用模型
+### 几种数据结构
+字符串String、字典Hash、列表List、集合Set、有序集合SortedSet。
+高级用法：
+- HyperLogLog 供不精确的去重计数功能，比较适合用来做大规模数据的去重统计，例如统计 UV；             
+- Bitmap 位图是支持按 bit 位来存储信息，可以用来实现 布隆过滤器（BloomFilter）；
+- GeoHash  可以用来保存地理位置，并作位置距离计算或者根据半径计算位置等。有没有想过用Redis来实现附近的人？
+- Pub/Sub 功能是订阅发布功能，可以用作简单的消息队列。
+- Pipeline    可以批量执行一组指令，一次性返回全部结果，可以减少频繁的请求应答。     
+### pub/su b有什么缺点？
+在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如RocketMQ等。
+### BloomFilter 原理 
+当一个元素被加入集合时，通过K个散列函数将这个元素映射成一个位数组中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了：如果这些点有任何一个0，则被检元素一定不在；如果都是1，则被检元素很可能在。这就是布隆过滤器的基本思想。
+### Zset 原理(跳跃表)
+跳跃表性质如下：
+- 一个跳表由很多层组成
+- 每一层都是一个有序的链表
+- 最底层的链表(Level 1)包含所有的元素
+- 如果一个元素出现在Level i层的链表中，则在Level i层以下的所有层都将包含该元素
+- 每个节点包含key及其对应的value和一个指向同一层链表的下个节点的指针数组
+### 持久化   
+Redis 提供了 RDB 和 AOF 两种持久化方式，RDB是将全量数据集以快照形式写入磁盘，实际上是通过fork 紫禁城执行,采用二进制压缩存储;AOF以分别日志形式记录 redis 增量，     
+### 高可用
+哨兵(3个选举)+ 主从(RDB+AOF)
 
-    得出，问题可能出在连接池数量不足， 接下来怎么解决这个问题 ，由于 JetCache 连接池 用的是 Jedis 连接池 ，
-**优化方案1**
-* 是优化连接池参数 ，所以 请看下面这这篇文章：https://www.cnblogs.com/benwu/articles/8616141.html
-* maxTotal 资源池大小 ，这个得配置是一个很难回答的问题，考虑的因素有以下几点:
-*  业务希望并发量 ，客户端执行命令时间 ，Redis资源：例如 nodes(例如应用个数) * maxTotal 是不能超过redis的最大连接数。   QPS（服务器在一秒的时间内处理了多少个请求 ）
-*  一次命令时间（borrow|return resource + Jedis执行命令(含网络) ）的平均耗时约为1ms，一个连接的QPS大约是1000 ，业务期望的QPS是50000，那么理论上需要的资源池大小是50000 / 1000 = 50个
+### Redis的过期策略
+- 定期随机删除
+- 惰性删除
+- 内存淘汰 （（volatile-lru 尝试回收最少使用的键），LRU算法）
 
-**优化方案2** 
 
-替换 客户端为 	Lettuce（生菜）  
-     Lettuce 相对Jedis 优势： https://gitbook.cn/gitchat/activity/5b286ab6328c342a9ff715c6?utm_source=csdn_blog  https://yq.aliyun.com/articles/584971</br>
-      Lettuce 是一个可伸缩的线程安全的 Redis 客户端，支持同步、异步和响应式模式。多个线程可以共享一个连接实例，而不必担心多线程并发问题。它基于优秀 Netty NIO 框架构建，支持 Redis 的高级功能，如 Sentinel，集群，流水线，自动重新连接和 Redis 数据模型  一篇番外 redis 如何配置Lettuce  https://blog.csdn.net/winter_chen001/article/details/80614331</br>redisson,jedis,Lettuce 三者的区别 ：https://www.cnblogs.com/liyan492/p/9858548.html
+
+    
+
+
+
+
+
+
+
+
+
+### 缓存雪崩和穿透的解决方案
+
+####缓存雪崩
+
+同一时间缓存大面积失效，后面请求落到数据库上。
+
+解决方法
+- 事前: 保证 redis 集群高可用性，发现宕机尽快补上。选择合适的内存淘汰策略
+- 事中: 本地 ehcache缓存+ hystrix 限流& 降级 ,避免 MySql 崩掉
+- 事后： 利用 redis 持久化机制 保存的数据尽快恢复缓存 
+
+### 缓存穿透
+热点key 不在缓存中，导致请求直接到了 数据库上，
+
+
+解决方法
+- 缓存无效key 设置过期时间尽量短
+- 布隆过滤器
+
+```
+当一个元素加入布隆过滤器中的时候，会进行如下操作：
+   
+   使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。
+   根据得到的哈希值，在位数组中把对应下标的值置为 1。
+   当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行如下操作：
+   
+   对给定元素再次进行相同的哈希计算；
+   得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。
+```
+### 如何保证 缓存数据库双写数据一致性
+
+- 弱一致性 ，定时任务
+- 强一致性 ，串行化 ，但会影响性能
+
+[redisson,jedis,Lettuce 三者的区别](https://www.cnblogs.com/liyan492/p/9858548.html)

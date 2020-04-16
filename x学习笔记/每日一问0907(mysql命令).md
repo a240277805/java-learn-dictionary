@@ -26,7 +26,7 @@
 * 查看最大连接数量:show variables like '%max_connections%';
 * 查看超时时间:show variables like '%timeout%';
 
-* 查看引擎状态 (死锁分析，内存分析):show engine innodb status
+* 查看引擎状态 (死锁分析，内存分析):show engine innodb statusinnodb_trx
 
 | BACKGROUND THREAD                     | 后台Master线程                                                                      |
 |---------------------------------------|---------------------------------------------------------------------------------|
