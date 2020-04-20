@@ -24,6 +24,12 @@
 (1)、没有用上索引：例如该字段没有索引；由于对字段进行运算、函数操作导致无法用索引。
 
 (2)、数据库选错了索引。
+
+### 慢查询
+慢查询日志：响应时间超过阈值的语句，默认时间10秒，默认不开，会影响性能，开启参数  slow_query_log=1
+
+slow_query_log_file 这个表中记录
+
  
 [腾讯面试：一条SQL语句执行得很慢的原因有哪些？---不看后悔系列](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485185&idx=1&sn=66ef08b4ab6af5757792223a83fc0d45&chksm=cea248caf9d5c1dc72ec8a281ec16aa3ec3e8066dbb252e27362438a26c33fbe842b0e0adf47&token=79317275&lang=zh_CN%23rd) 
 
