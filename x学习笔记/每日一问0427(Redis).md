@@ -101,4 +101,13 @@ Redis 提供了 RDB 和 AOF 两种持久化方式，RDB是将全量数据集以�
 - 弱一致性 ，定时任务
 - 强一致性 ，串行化 ，但会影响性能
 
+### 高可用部署
+- 主从
+- 哨兵（Sentinel）: 是一个集群，监控redis 节点，每隔一秒向master发送ping,如果再一段时间内收不到pong，则认为master 下线
+- cluster 集群部署 :采用去中心化的思想;它采用一定方式，在集群中分布存储;节点之间采用轻量协议通讯，减少带宽占用；自动实现负载均衡与高可用，自动实现 failover并且支持动态扩展；内部也需要配置主从，并且内部也是采用哨兵模式，如果集群中master没有slave节点，则master挂掉整个集群进入fail状态，因为集群slot映射补全，如果超过半数master挂掉也会进入fail
+
+
+
+
+
 [redisson,jedis,Lettuce 三者的区别](https://www.cnblogs.com/liyan492/p/9858548.html)

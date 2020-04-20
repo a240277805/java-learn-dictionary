@@ -45,6 +45,24 @@ FST 为啥省内存??
 额外值得一提的两点是：
 * term index 在内存中是以 FST（finite state transducers）的形式保存的，其特点是非常节省内存。
 * Term dictionary 在磁盘上是以分 block 的方式保存的，一个 block 内部利用公共前缀压缩（也是公共前缀压缩？），比如都是 Ab 开头的单词就可以把 Ab 省去。这样 term dictionary 可以比 b-tree 更节约磁盘空间。
+### 数据写入流程
+1. 新增的文档首先会放入内存的缓存中
+2. 当文档足够多，或者到达一定时间点，就会对缓存进行commit
+- 生成一个新的segment,并写入磁盘
+- 生成一个新的commit point ,记录当前所有可用的segment
+- 等待所有数据都已吸入磁盘
+
+3、 打开新增segment,这样我们就可以对新增的文档进行搜索了。
+
+4、 清空缓存，准备接受新的文档。
+### 数据的删除和更新
+- 删除 是标记删除 ，维护.del 文件，查询是加过滤
+- 更新是先删除再插入新的。
+### Refesh
+ES 一个特性是提供实时搜索。在提交数据时，写入磁盘速度太慢，就先写入文件缓存，然后打开可供查询，然后再逐渐将文件flush 到磁盘。默认refresh频率是一秒，插入后没有refresh 是搜不到的可以手动触发refresh.
+### flush 与 translog
+当新插入的数据写入文件缓存，如果断电会丢失，所以新增加了 translog,每次写入记录translog,当translog足够大，或者时间够就flush 到磁盘，清空translog.
+
 
 <h3>如何联合索引查询？</h3>
 
