@@ -65,8 +65,15 @@ kafka 会定时触发分区加平衡操作，也可以主动触发；触发后�
 - 正常情况下 ,kafka 有 offset ，记录 patition 当前消费的位置
 - 异常情况，offset 没更新宕机了，这时要在业务里加幂等性判断。
 
-
-参考：
+### kafka的负载均衡算法
+```aidl
+       1. A=(partition数量/同组内消费者总个数) 
+       2. M=对上面所得到的A值小数点第一位向上取整 
+       3. 计算出该消费者拉取数据的patition合集：Ci = [P(M*i )~P((i + 1) * M -1)]
+```
+       
+### 参考：
+[Kafka的Consumer负载均衡算法](https://www.codercto.com/a/29055.html)
 
 [Kafka 高性能吞吐揭秘](https://segmentfault.com/a/1190000003985468)
 

@@ -73,6 +73,8 @@ ES 一个特性是提供实时搜索。在提交数据时，写入磁盘速度�
 2. 使用 `bitset` 数据结构，对 gender 和 age 两个 filter 分别求出 bitset，对两个 bitset 做 AN 操作。
 `PostgreSQL 从 8.4 版本开始支持通过 bitmap 联合使用两个索引，就是利用了 bitset 数据结构来做到的。`
 
+
+
 **`Elasticsearch` 支持以上两种的联合索引方式，如果查询的 filter 缓存到了内存中（以 bitset 的形式），那么合并就是两个 bitset 的 AND。如果查询的 filter 没有缓存，那么就用 skip list 的方式去遍历两个 on disk 的 posting list。**
 
 <h4>利用 Skip List 合并</h4>
@@ -92,7 +94,7 @@ ES 一个特性是提供实时搜索。在提交数据时，写入磁盘速度�
 
 Lucene 自然会对这个 block 再次进行压缩。其压缩方式叫做 `Frame Of Reference` 编码 _`Frame Of Reference？？？？是个啥`_
 
-<h3>加载</h3>
+### 加载
 如何利用索引和主存储，是一种两难的选择。
 
 * 选择不使用索引，只使用主存储：除非查询的字段就是主存储的排序字段，否则就需要顺序扫描整个主存储。
@@ -139,6 +141,17 @@ Elasticsearch 的 document 都有一个 uid，`默认策略是按照 uid 的 has
 
 Elasticsearch 将要发布的 2.0 版本的最重量级的新特性是 Pipeline Aggregation，它支持数据在聚合之后再做聚合。类似 SQL 的子查询和 Having 等功能都将被支持。
 
+
+## 面试相关
+###  ES是如何分片的
+  ES的路由机制是通过`哈希算法`，将具有相同哈希值的文档放在同一分片中，通过这个哈希算法做负载均衡
+```aidl
+  计算公式:
+`shard = hash(routing) % number_of_primary_shards`　
+routing 值是一个任意字符串，它默认是_id但也可以自定义。这个routing 字符串通过哈希函数生成一个数字，然后除以主切片的数量得到一个余数(remainder)
+```
+#### 指定个性化路由
+在插入和查询的时候根据业务需要指定分片(可以使多个)，可以减少资源消耗，但是使用不当会造成文档分布不均匀，某些分片较大
 
 
 
