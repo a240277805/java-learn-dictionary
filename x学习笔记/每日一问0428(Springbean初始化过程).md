@@ -1,13 +1,18 @@
 # Spring bean 初始化过程
 问题
-
-* 1.bean 是如何被初始化 在 bean中的
+*  1.bean 是如何被初始化 在 IOC容器中的
 * 2.bean 是如何销毁的
 * 3.bean 初始化后保存在哪
 * 4.bean bean 怎么延迟初始化的
 * 5.通过main 方法怎么实现一个 bean
 
 在理解任何技术之前，我都会问自己一个问题：它的产生是为了解决什么样的问题，以及如何解决这些问题？希望你能在本篇文章中找到答案……
+### 怎么将自己的对象注入Spring
+- @bean
+- ApplicationContext.beanFactory.register...
+- FactoryBean 注入对象 生成defination 放入 map（BeanDefinationMap里增加自己对象的class）
+
+`classLoader 加载有注解的类 ，生成 define,放入BeanDefinationMap,当用到的时候，从define 查找，拿出来初始化。`
 
 知识点收集：</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&#160;上面的生命周期流程图，时候的时候注意调用先后顺序，避免属性被覆盖的现象。
