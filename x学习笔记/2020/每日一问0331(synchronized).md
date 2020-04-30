@@ -21,3 +21,9 @@
 多线程访问volatile关键字不会发生阻塞，而synchronized关键字可能会发生阻塞
 - volatile关键字能保证数据的可见性，但不能保证数据的原子性。synchronized关键字两者都能保证。
 - volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized关键字解决的是多个线程之间访问资源的同步性。
+
+### 锁升级 
+![avator](http://ifeve.com/wp-content/uploads/2012/10/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E6%92%A4%E9%94%80.png)
+
+参考:
+[Java多线程--syncornized原理与应用](https://blog.csdn.net/hello_worldee/article/details/77823062)
