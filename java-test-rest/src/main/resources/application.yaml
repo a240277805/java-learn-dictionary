@@ -42,3 +42,5 @@ logging:
 # mybatis 配置
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
+  # 加载全局的配置文件
+  config_location: classpath:mybatis/mybatis-config.xml
