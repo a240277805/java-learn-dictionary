@@ -5,6 +5,7 @@
 - ScriptRunner
 - SqlRunner
 - MetaObject
+![avatar](../ImgSource/mybatis.png)
 
 
 ## SqlSession执行 Mapper 过程

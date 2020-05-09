@@ -25,5 +25,7 @@
 ### 锁升级 
 ![avator](http://ifeve.com/wp-content/uploads/2012/10/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E6%92%A4%E9%94%80.png)
 
+![avator](http://ifeve.com/wp-content/uploads/2012/10/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81.png)
+
 参考:
 [Java多线程--syncornized原理与应用](https://blog.csdn.net/hello_worldee/article/details/77823062)

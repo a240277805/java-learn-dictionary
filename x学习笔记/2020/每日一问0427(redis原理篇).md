@@ -32,7 +32,7 @@ SDS是采用二进制安全的(binary-safe)，处理二进制方式处理数据�
 #### 字典 HashMap
 
 - 拉链法解决hash冲突（插入是头插法，因为单线程，索引没有死循环问题）
-##### rehash 过程 （渐进式Rehash）
+##### rehash 过程 （渐进式Rehash） 扩容
 - 有 A——map 进行 rehash , 首先分配 A长度*2 的 B-Map，
 - 将A值copy到 B
 ```aidl
