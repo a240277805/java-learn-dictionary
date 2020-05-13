@@ -26,9 +26,7 @@ public class UserServiceTest {
     @Test
     public void selectOneTest() {
         UserDO userDO = userService.selectOne();
-//        System.out.println(JSON.toJSON(userDO));
-//
-//        System.out.println("success");
+
         log.info("userDO: {}", JSON.toJSON(userDO));
     }
 
