@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+
         <!--本项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>
