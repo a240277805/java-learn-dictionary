@@ -129,5 +129,15 @@ zk服务器会有dataDir 和dataLogDir两个目录，分别用于存储快照数
 ### Too many connections 
 maxClientCnxns 参数用于设置语序单个客户端创建的最大连接数。如果超过了，超过的部分会被拒绝连接。
 
+
+## 对比
+### zookeeper 和 eureka 有什么区别
+作为注册中心来说 基于CAP原则（数据一致性，可用性，分区容错性），
+ZK是保证CP，euraka 保证AP
+ZK是由leader 选举 ，下发事务请求，保证数据的一致性。ZK在leader 宕机或进行扩容的时候不能对外提供服务，这个时候对有些系统来说是影响非常大的。
+eurka 多台是 同等级的，挂了一个，通过他的负载均衡算法，另外的可以正常提供服务。另外还有心跳检测。
+
+
+
 ## 参考 
 [从Paxos到Zookeeper](https://zhuanlan.zhihu.com/p/69246172)
