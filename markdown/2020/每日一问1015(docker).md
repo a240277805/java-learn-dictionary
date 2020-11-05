@@ -18,6 +18,8 @@
 * 将容器的状态保存为镜像： docker commit $sample_job job1 
 * 在registry中的镜像可以使用以下命令查找到： docker search &lt;image-name> 
 * docker 查看挂载目录 docker inspect container_name | grep Mounts -A 20
+* 查看docker 镜像仓库地址:   cat /etc/docker/daemon.json
+* 
 
 
 
