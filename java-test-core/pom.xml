@@ -19,16 +19,21 @@
             <groupId>com.zmk.github</groupId>
             <artifactId>java-test-bean</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.1.6.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>spring-context</artifactId>-->
+        <!--            <version>5.1.6.RELEASE</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
         <!--Spring boot 相关-->
         <!--<dependency>-->
-            <!--<groupId>org.mybatis.spring.boot</groupId>-->
-            <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--<groupId>org.mybatis.spring.boot</groupId>-->
+        <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
         <!--</dependency>-->
+        <!--        kafka相关-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
     </dependencies>
 </project>

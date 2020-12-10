@@ -29,6 +29,17 @@ spring:
     filters: stat,wall
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  kafka:
+    bootstrap-servers: 172.20.60.23:9092 #指定kafka server的地址，集群配多个，中间，逗号隔开
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: devops-group #群组ID
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 # port
 server:

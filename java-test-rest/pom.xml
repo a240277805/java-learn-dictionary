@@ -63,6 +63,7 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.36.Final</version>
         </dependency>
+
     </dependencies>
 
     <profiles>

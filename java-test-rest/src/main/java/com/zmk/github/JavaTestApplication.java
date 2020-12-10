@@ -17,8 +17,8 @@ public class JavaTestApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(JavaTestApplication.class, args);
-        //启动服务端
-        NettyServer nettyServer = new NettyServer();
-        nettyServer.start(new InetSocketAddress("127.0.0.1", 8090));
+//        //启动服务端
+//        NettyServer nettyServer = new NettyServer();
+//        nettyServer.start(new InetSocketAddress("127.0.0.1", 8090));
     }
 }
