@@ -1,6 +1,7 @@
 package com.zmk.github.controller;
 
 import com.zmk.github.AO.KafkaSendAO;
+import com.zmk.github.info.kafka.events.AffairEvent;
 import com.zmk.github.service.KafkaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,7 +21,10 @@ public class KafkaController {
     @PostMapping(value = "send", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Object send(@RequestBody KafkaSendAO request) {
 
-        kafkaService.send(request.getTopic(),request.getInfo());
+        AffairEvent affairEvent = new AffairEvent();
+        affairEvent.setId(1l);
+        affairEvent.setType("task");
+        kafkaService.send(request.getTopic(), affairEvent);
         return "success";
     }
 }

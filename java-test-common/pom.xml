@@ -11,20 +11,31 @@
     </parent>
 
     <groupId>com.zmk.github</groupId>
-    <artifactId>java-test-bean</artifactId>
+    <artifactId>java-test-common</artifactId>
     <version>${projects.version}</version>
     <name>${project.artifactId}</name>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
-        </dependency>
         <!--本项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>
+            <artifactId>java-test-bean</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zmk.github</groupId>
+                    <artifactId>java-test-bean-common</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zmk.github</groupId>
             <artifactId>java-test-bean-common</artifactId>
+        </dependency>
+        <!--        apache 通用工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
         </dependency>
     </dependencies>
 </project>
