@@ -3,18 +3,15 @@ package com.zmk.github;
 
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
-import com.zmk.github.netty.NettyServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-import java.net.InetSocketAddress;
-
 @SpringBootApplication(scanBasePackages = {"com"})
 @MapperScan(basePackages = {"com.zmk.github.mappers"})
 @ServletComponentScan(basePackages = "com.zmk.github.controller")
-@EnableMethodCache(basePackages = "com.ctfo.platform.devplatformserver")
+@EnableMethodCache(basePackages = "com.zmk.github")
 @EnableCreateCacheAnnotation
 public class JavaTestApplication {
 

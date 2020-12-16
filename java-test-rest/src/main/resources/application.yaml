@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: local
   #控制台输出彩色
   output:
     ansi:
@@ -38,17 +38,16 @@ spring:
       batch-size: 16384
       # 设置生产者内存缓冲区的大小。
       buffer-memory: 33554432
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    #      key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+    #      value-serializer: org.apache.kafka.common.serialization.StringDeserializer
     consumer:
-      group-id: devops-group #群组ID
       enable-auto-commit: true
-      auto-commit-interval: 100
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-commit-interval: 10000
+    #      key-deserializer: StringDeserializer
+    #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
       # 在侦听器容器中运行的线程数。
-      concurrency: 5
+      concurrency: 1
 # port
 server:
   port: @server.port@
@@ -64,28 +63,32 @@ mybatis:
   # 加载全局的配置文件
   config_location: classpath:mybatis/mybatis-config.xml
 ---
-# jetcache 缓存相关
+#jetcache 集成使用
 jetcache:
-  areaInCacheName: false
+  statIntervalMinutes: 15   # 每隔多久统计信息的时长配置
+  areaInCacheName: false   #是否配置前缀
+
   local:
-    default:
-      keyConvertor: fastjson
-      limit: 100
-      type: linkedhashmap
+    default: #默认area
+      type: caffeine   #本地缓存类型
+      keyConvertor: fastjson   #key的序列化转化的协议
+      limit: 100              #本地缓存最大个数
+      defaultExpireInMillis: 10000   #缓存的时间全局 默认值
   remote:
     default:
-      database: 0
-      host: 172.20.60.23
+      type: redis.lettuce          #缓存数据库类型
       keyConvertor: fastjson
-      password: redis@2020
+      uri:
+        - redis://redis%402020@172.20.60.23:6379/  #这里支持集群配置
+      valueDecoder: java
+      valueEncoder: java
       poolConfig:
         maxIdle: 20
         maxTotal: 50
         minIdle: 5
-      port: 6379
-      type: redis
-      valueDecoder: java
-      valueEncoder: java
-  # jetcache配
-  statIntervalMinutes: 15
+      # 前缀
+      keyPrefix: devops:devplatform
 ---
+logback-config:
+  #该日志路径为绝对路径
+  logHomeDir: ../data1/logs

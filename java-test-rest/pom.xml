@@ -23,6 +23,11 @@
         <!--本项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>
+            <artifactId>java-test-bean</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zmk.github</groupId>
             <artifactId>java-test-core</artifactId>
             <version>${project.version}</version>
         </dependency>

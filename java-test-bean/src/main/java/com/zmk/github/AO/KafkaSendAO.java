@@ -1,5 +1,6 @@
 package com.zmk.github.AO;
 
+import com.zmk.github.info.kafka.events.GitlabEvent;
 import lombok.Data;
 
 /**
@@ -9,6 +10,6 @@ import lombok.Data;
  */
 @Data
 public class KafkaSendAO {
-    private String topic;
-    private Object info;
+    private String event;
+    private GitlabEvent info;
 }

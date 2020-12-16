@@ -14,14 +14,16 @@
     <version>${projects.version}</version>
     <name>${project.artifactId}</name>
     <dependencies>
-        <!--本项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>
             <artifactId>java-test-bean</artifactId>
+            <version>${projects.version}</version>
         </dependency>
+        <!--本项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>
             <artifactId>java-test-common</artifactId>
+            <version>${projects.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.zmk.github</groupId>
@@ -29,16 +31,22 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <!--        kafka相关-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-        <!--        jetcache 缓存相关-->
+        <!--jetcache缓存 lettuce-->
         <dependency>
             <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis</artifactId>
-            <version>2.6.0</version>
+            <artifactId>jetcache-starter-redis-lettuce</artifactId>
+            <version>2.6.0.M1</version>
+        </dependency>
+        <!--        本地缓存-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
     </dependencies>
 </project>

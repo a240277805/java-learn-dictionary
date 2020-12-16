@@ -8,10 +8,6 @@ import java.util.HashSet;
  * @Description kafka 发消息 相关
  */
 public class KafkaKeysConstants {
-    //项目部
-    public final static String QF_PROJECT = "devops";
-    //服务
-    public final static String SERVICE = "devplatform";
     //服务类型-方法
     public final static String SERVICE_CACHE_TYPE_METHOD = "method";
     //服务类型-字典

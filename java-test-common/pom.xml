@@ -31,11 +31,17 @@
             <groupId>com.zmk.github</groupId>
             <artifactId>java-test-bean-common</artifactId>
         </dependency>
-        <!--        apache 通用工具包-->
+<!--        &lt;!&ndash;        apache 通用工具包&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.commons</groupId>-->
+<!--            <artifactId>commons-lang3</artifactId>-->
+<!--            <version>3.8.1</version>-->
+<!--        </dependency>-->
+        <!--JSON 序列化-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.68</version>
         </dependency>
     </dependencies>
 </project>

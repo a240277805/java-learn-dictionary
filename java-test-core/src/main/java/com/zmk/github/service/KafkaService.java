@@ -8,5 +8,5 @@ import com.zmk.github.info.kafka.events.KafkaBodyAbstract;
  * @Description
  */
 public interface KafkaService {
-    void send(String msgKey, KafkaBodyAbstract msgData);
+    Boolean send(String msgKey, KafkaBodyAbstract msgData);
 }
