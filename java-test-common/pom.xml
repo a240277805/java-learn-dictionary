@@ -31,7 +31,7 @@
             <groupId>com.zmk.github</groupId>
             <artifactId>java-test-bean-common</artifactId>
         </dependency>
-<!--        &lt;!&ndash;        apache 通用工具包&ndash;&gt;-->
+        <!--        apache 通用工具包-->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.commons</groupId>-->
 <!--            <artifactId>commons-lang3</artifactId>-->
@@ -42,6 +42,16 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.68</version>
+        </dependency>
+        <!--        es 相关-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
     </dependencies>
 </project>

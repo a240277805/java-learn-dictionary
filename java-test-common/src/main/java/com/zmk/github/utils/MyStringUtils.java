@@ -1,9 +1,9 @@
 package com.zmk.github.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import com.zmk.github.info.kafka.events.KafkaBodyAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
