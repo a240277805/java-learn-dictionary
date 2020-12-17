@@ -7,10 +7,11 @@ spring:
       enabled: always
   # mysql
   datasource:
-    url: jdbc:mysql://sh-cynosdbmysql-grp-fpbsi8fm.sql.tencentcdb.com:27096/zmk_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#    url: jdbc:mysql://sh-cynosdbmysql-grp-fpbsi8fm.sql.tencentcdb.com:27096/zmk_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://172.20.60.23:3306/devops?useUnicode=true&characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: Aa417246329
+    password: mysql@2020
     type: com.alibaba.druid.pool.DruidDataSource
     # druid 相关
     initial-size: 1
@@ -67,7 +68,6 @@ mybatis:
 jetcache:
   statIntervalMinutes: 15   # 每隔多久统计信息的时长配置
   areaInCacheName: false   #是否配置前缀
-
   local:
     default: #默认area
       type: caffeine   #本地缓存类型

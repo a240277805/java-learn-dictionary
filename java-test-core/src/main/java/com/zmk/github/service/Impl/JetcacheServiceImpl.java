@@ -29,10 +29,10 @@ import java.util.concurrent.TimeUnit;
 public class JetcacheServiceImpl implements IJetcacheService {
     static Logger logger = LoggerFactory.getLogger(JetcacheServiceImpl.class);
 
-    @CreateCache(name = "ctfo:devplatform:cacehTraceId", expire = 12 * 60 * 60)
+    @CreateCache(name = ":cacehTraceId", expire = 12 * 60 * 60)
     private Cache<String, String> messageKeyCache;
 
-    @CreateCache(name = "ctfo:devplatform:kafkaCacheTraceId", expire = 1, timeUnit = TimeUnit.DAYS)
+    @CreateCache(name = ":kafkaCacheTraceId", expire = 1, timeUnit = TimeUnit.DAYS)
     private Cache<String, String> kafkaCacheTraceIdCache;
     @Autowired
     private RedisClient redisClient;

@@ -58,7 +58,7 @@ public class KafkaConsumer {
      *
      * @param consumerRecord
      */
-    @KafkaListener(topics = {KafkaKeysConstants.DEVOPS_PLATFORM_EVENT_TOPIC}, groupId = "KafkaKeysConstants.DEVOPS_PLATFORM_CACHE_GROUP11")
+    @KafkaListener(topics = {KafkaKeysConstants.DEVOPS_PLATFORM_EVENT_TOPIC}, groupId ="test1")
     @Transactional(rollbackFor = Exception.class)
     public void consume(ConsumerRecord<String, String> consumerRecord) {
         try {
