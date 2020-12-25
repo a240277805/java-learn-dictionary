@@ -16,6 +16,10 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.zmk.github</groupId>
+            <artifactId>java-test-common</artifactId>
+        </dependency>
         <!--本地项目包-->
         <dependency>
             <groupId>com.zmk.github</groupId>

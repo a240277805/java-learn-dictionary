@@ -15,6 +15,10 @@
     <name>${project.artifactId}</name>
     <description>解决bean 和common 循环依赖，下沉共同依赖部分</description>
     <dependencies>
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.68</version>
+        </dependency>
     </dependencies>
 </project>

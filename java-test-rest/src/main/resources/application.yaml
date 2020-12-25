@@ -55,6 +55,13 @@ server:
 
 logging:
   config: @logging.config@
+---
+spring:
+  data:
+    es:
+      # es url
+      url: http://172.20.60.23:9200
+
 
 
 
@@ -87,7 +94,7 @@ jetcache:
         maxTotal: 50
         minIdle: 5
       # 前缀
-      keyPrefix: devops:devplatform
+      keyPrefix: java-test:zmk
 ---
 logback-config:
   #该日志路径为绝对路径

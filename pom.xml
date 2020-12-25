@@ -29,6 +29,8 @@
         <java-test-version>1.0.1-SNAPSHOT</java-test-version>
         <!-- redis client 版本 -->
         <redis.client.version>2.9.3</redis.client.version>
+        <!--需要覆盖默认的ES版本配置，与本地引入的ES版本保持一致-->
+        <elasticsearch.version>7.6.2</elasticsearch.version>
     </properties>
 
     <!--依赖管理-->

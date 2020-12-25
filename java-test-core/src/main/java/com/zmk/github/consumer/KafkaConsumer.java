@@ -12,9 +12,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
@@ -58,8 +56,9 @@ public class KafkaConsumer {
      *
      * @param consumerRecord
      */
-    @KafkaListener(topics = {KafkaKeysConstants.DEVOPS_PLATFORM_EVENT_TOPIC}, groupId ="test1")
-    @Transactional(rollbackFor = Exception.class)
+    //TODO 先不注册消费消息
+//    @KafkaListener(topics = {KafkaKeysConstants.DEVOPS_PLATFORM_EVENT_TOPIC}, groupId ="test1")
+//    @Transactional(rollbackFor = Exception.class)
     public void consume(ConsumerRecord<String, String> consumerRecord) {
         try {
 
