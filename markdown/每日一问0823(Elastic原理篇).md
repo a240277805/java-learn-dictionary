@@ -1,7 +1,7 @@
 <h1>Elastic 原理篇</h1>
 <h2>WHY</h2>
 
-此文章参照 infoQ陶文大师的文章[时间序列数据库的秘密](https://www.infoq.cn/profile/1278798)  根据自己的理解整理的 
+此文章参照 infoQ陶文大师的文章[时间序列数据库的秘密](时间序列数据库的秘密（一）)  根据自己的理解整理的 
 
 <h3>时间序列数据</h3>
 * 1.第一类格式 
@@ -37,9 +37,9 @@ Mysql 只有 term dictionary 这一层，是以 b-tree 排序的方式存储在�
 ![avatar](https://images2017.cnblogs.com/blog/504727/201710/504727-20171018202211834-1358126860.jpg)
 
 FST 为啥省内存??
-   
+
    正因为，我们保证了所有的Key都是按照字典序加进来的，所以当加入一个新Key的时侯，我们可以先求出新加的Key和上一次输入的Key的公共前缀，然后就可以把 上一次输入的Key除去公共前缀剩下的部分存入文件中了。
-   
+
 如果想了解请查看Lucene4.0官方开源代码Builder.java 的add 方法。目前Lucene还支持FST的反映射，即通过Value找Key，以及前k小的Key（按照Value大小排序）。其实就是在FST上用`Dijikstra`求最短路。
 
 额外值得一提的两点是：
@@ -158,3 +158,8 @@ routing 值是一个任意字符串，它默认是_id但也可以自定义。这
 
 
 
+
+## 参考
+
+[高效管理 Elasticsearch 中基于时间的索引](https://juejin.cn/post/6844903569015963656#comment)
+[高效管理 Elasticsearch 中基于时间的索引 english](https://www.elastic.co/cn/blog/managing-time-based-indices-efficiently)

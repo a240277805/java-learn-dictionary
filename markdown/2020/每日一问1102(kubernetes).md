@@ -280,15 +280,4 @@ Kubernetes 1.8版本以后，Init container特性完全成熟，其定义被放�
 
 在Kubernetes 1.8中，资源对象中的很多Alpha、Beta版本的Annotations被取消，升级成了常规定义方式，在学习Kubernetes的过程中需要特别注意。
 
-## 命令 
-* 查看集群中有多少个Node: kubectl get nodes 
-* 查看某个Node详细信息: kubectl describe node  node-1 (Node启动后会做一系列的自检工作，比如磁盘空间是否不足（DiskPressure）、内存是否不足（MemoryPressure）、网络是否正常（NetworkUnavailable）、PID资源是否充足（PIDPressure）。在一切正常时设置Node为Ready状态（Ready=True），该状态表示Node处于健康状态，Master将可以在其上调度新的任务了（如启动Pod）。;Node 主机地址；Node 主机系统信息；Node可分配资源量；Node相关Event 信息)
-* 创建Deployment ： kubectl create -f  demo-deployment.yaml
-* 查看 deployment 信息 ： kubectl get deployments
-* 查看deployment 对应的 Replica Set : kubectl get rs
-* 查看Service端口： k get endpoints
-* 查看Service 更多信息: k get svc  {service-name} -o yaml 
-* 查看命名空间: k get namespaces
-* 查看一个命名空间下 pod : k  get pods --namespace=devops
-* 根据文件或者输入来创建资源: k create -f demo.yaml
-* 删除资源: k delete demo.yaml
+

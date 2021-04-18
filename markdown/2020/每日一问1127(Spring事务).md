@@ -10,3 +10,9 @@
 
 
 
+## Springboot 2.3 + 为啥不需要加 EnableTransactionManagement
+## 参考
+* [【springboot】为何不使用@EnableTransactionManagement就能使用事务？](https://blog.csdn.net/qq_32370913/article/details/105924209)
+
+* [Springboot源码分析之@Transactional](https://www.cnblogs.com/qinzj/p/11420840.html)
+

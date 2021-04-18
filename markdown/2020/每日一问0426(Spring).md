@@ -36,3 +36,31 @@
 - 设值注入
 ![avatar](../ImgSource/spring_zhuru3.png)
 
+
+
+### @PostConstruct 注解
+
+@PostConstruct该注解被用来修饰一个非静态的void（）方法。
+
+Constructor(构造方法) -> @Autowired(依赖注入) -> @PostConstruct(注释的方法)
+
+```java
+@Component
+public class MyUtils {
+ 
+    private static MyUtils          staticInstance = new MyUtils();
+ 
+    @Autowired
+    private MyMethorClassService    myService;
+ 
+    @PostConstruct
+    public void init(){
+        staticInstance.myService = myService;
+    }
+ 
+    public static Integer invokeBean(){
+        return staticInstance.myService.add(10,20);
+    }
+}
+```
+
