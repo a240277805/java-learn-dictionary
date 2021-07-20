@@ -67,15 +67,15 @@
          2.8 之前 只要断线 就要复制 ，2.8 之后短时断线 从服务器根据偏移量部分重同步
 
 
-    
-         [redisson,jedis,Lettuce 三者的区别](https://www.cnblogs.com/liyan492/p/9858548.html)
-     理器/命令请求处理器/命令回复处理器)
-     多个 socket 可能会并发产生不同的操作，每个操作对应不同的文件事件，但是 IO 多路复用程序会监听多个 socket，会将 socket 产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。
-     ![avatar](https://www.javazhiyin.com/wp-content/uploads/2018/12/redis-single-thread-model.png)
+​    
+​         [redisson,jedis,Lettuce 三者的区别](https://www.cnblogs.com/liyan492/p/9858548.html)
+​     理器/命令请求处理器/命令回复处理器)
+​     多个 socket 可能会并发产生不同的操作，每个操作对应不同的文件事件，但是 IO 多路复用程序会监听多个 socket，会将 socket 产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。
+​     ![avatar](https://www.javazhiyin.com/wp-content/uploads/2018/12/redis-single-thread-model.png)
 ### BloomFilter 原理 
 当一个元素被加入集合时，通过K个散列函数将这个元素映射成一个位数组中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了：如果这些点有任何一个0，则被检元素一定不在；如果都是1，则被检元素很可能在。这就是布隆过滤器的基本思想。
 ### 持久化   
-Redis 提供了 RDB 和 AOF 两种持久化方式，RDB是将全量数据集以快照形式写入磁盘，实际上是通过fork 紫禁城执行,采用二进制压缩存储;AOF以分别日志形式记录 redis 增量，     
+Redis 提供了 RDB 和 AOF 两种持久化方式，RDB是将全量数据集以快照形式写入磁盘，实际上是通过fork 紫禁城执行,采用二进制压缩存储;AOF以分别日志形式记录 redis 增量，  
 ### Redis的过期策略
 - 定期随机删除
 - 惰性删除
