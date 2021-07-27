@@ -1,0 +1,74 @@
+spring:
+  profiles:
+    active: local
+---
+#本地环境配置
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles: local
+  application:
+    name: java-test-local
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 172.20.60.23:18848
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        ext-config: mysql-local.yaml,redis-local.yaml,kafka-local.yaml
+      discovery:
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        server-addr: 172.20.60.23:18848
+---
+#开发环境配置
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles: dev
+  application:
+    name: java-test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 172.20.60.23:18848
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        ext-config: mysql-dev.yaml,redis-dev.yaml,kafka-dev.yaml,es-dev.yaml
+      discovery:
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        server-addr: 172.20.60.23:18848
+---
+#测试环境配置
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles: test
+  application:
+    name: java-test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: nacos-cs.devops:8848
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        ext-config: mysql-products-server-test.yaml,redis-test.yaml,minio-test.yaml
+      discovery:
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        server-addr: nacos-cs.devops:8848
+---
+#生产环境配置
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles: prod
+  application:
+    name: java-test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: nacos-cs.ctfo-cloud-stable-env.svc:8848
+        namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
+        ext-config: mysql-products-server-prod.yaml,redis-prod.yaml,minio-prod.yaml
+      discovery:
+        server-addr: nacos-cs.ctfo-cloud-stable-env.svc:8848
