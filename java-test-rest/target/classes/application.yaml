@@ -52,10 +52,10 @@ spring:
       concurrency: 1
 # port
 server:
-  port: @server.port@
+  port: 8083
 
 logging:
-  config: @logging.config@
+  config: classpath:logs/logback-javatest.xml
 ---
 spring:
   data:

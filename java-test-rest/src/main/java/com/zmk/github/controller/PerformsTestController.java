@@ -35,6 +35,8 @@ public class PerformsTestController {
      */
     @GetMapping(value = "/memory/leak")
     public String leak() {
+
+
         System.out.println("模拟内存泄漏");
         ThreadLocal<Byte[]> localVariable = new ThreadLocal<Byte[]>();
         localVariable.set(new Byte[4096 * 1024]);// 为线程添加变量

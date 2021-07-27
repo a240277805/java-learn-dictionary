@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- 日志存放路径-->
+    <springProperty scope="context" name="logHomeDir" source="logback-config.logHomeDir"/>
+    <!-- 异步缓冲队列的深度,该值会影响性能.默认值为256-->
+    <property name="queueSize" value="512"/>
+    <property name="maxHistory" value="168"/>
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+
+
+    <!-- 为了本地调试的时候，控制台打出 彩色日志-->
+    <property name="consolePattern"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([${appName:-}]){blue} %clr(%-5level){faint}  %clr([%thread]){magenta}][%X{hostIp}] [%X{PtxId}] %clr(%logger{50}){cyan} - %msg%n"/>
+    <property name="pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} - [${appName:-}] - [%-5level] - [%thread] - [%X{PtxId}] - [%logger] - %msg%n"/>
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${consolePattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="file_appender_daily" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>hostName</key>
+            <defaultValue>hostIp_UNDEFINED</defaultValue>
+        </discriminator>
+        <sift>
+            <!-- 按照每天生成日志文件 -->
+            <appender name="file_appender_daily" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <!-- 正在记录的日志文件的路径及文件名 -->
+                <file>${logHomeDir}/${appName}/${hostName}.log</file>
+                <!-- 如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。-->
+                <append>true</append>
+                <encoder>
+                    <pattern>${pattern}</pattern>
+                    <charset>utf-8</charset>
+                </encoder>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${logHomeDir}/${appName}/logs_bak/${appName}-${hostName}.log.%d{yyyy-MM-dd-HH}.gz
+                    </fileNamePattern>
+                    <!-- 单个文件最大为20MB -->
+                    <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+                    <!--<maxFileSize>20MB</maxFileSize>-->
+                    <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+                    <!-- 文件的保留个数 -->
+                    <maxHistory>${maxHistory}</maxHistory>
+                </rollingPolicy>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="ASYNC_LOG" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+        <appender-ref ref="file_appender_daily"/>
+    </appender>
+    <!--    输出特定包下                  日志内容-->
+    <springProfile name="local">
+        <logger name="org.springframework.data.mongodb.core" level="DEBUG"/>
+
+        <logger name="com.alicp.jetcache" level="DEBUG"/>
+        <logger name="com.zmk.github" level="DEBUG"/>
+
+        <!--nacos 日志打印级别-->
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <!--        <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="off" />-->
+    </springProfile>
+    <!--    输出特定包下                  日志内容-->
+    <springProfile name="!local">
+        <logger name="org.springframework.data.mongodb.core" level="DEBUG"/>
+        <logger name="com.alicp.jetcache" level="DEBUG"/>
+        <logger name="com.zmk.github" level="DEBUG"/>
+        <!--nacos 日志打印级别-->
+        <logger name="com.alibaba.nacos.client" level="ERROR"/>
+        <!--        <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="off" />-->
+    </springProfile>
+
+    <!--   定义 root logger-->
+    <root level="INFO">
+        <springProfile name="local">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <springProfile name="!local">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC_LOG"/>
+        </springProfile>
+    </root>
+</configuration>
