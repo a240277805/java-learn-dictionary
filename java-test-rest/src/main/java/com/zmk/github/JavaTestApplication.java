@@ -8,10 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
-@SpringBootApplication(scanBasePackages = {"com"})
+@SpringBootApplication(scanBasePackages = {"com.netflix.client.config.IClientConfig","com.zmk.github"})
 @MapperScan(basePackages = {"com.zmk.github.mappers"})
-@ServletComponentScan(basePackages = "com.zmk.github.controller")
-@EnableMethodCache(basePackages = "com.zmk.github")
+@ServletComponentScan(basePackages = {"com.zmk.github.controller"})
+@EnableMethodCache(basePackages = {"com.zmk.github"})
 @EnableCreateCacheAnnotation
 public class JavaTestApplication {
 

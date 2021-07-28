@@ -51,7 +51,7 @@ spring:
         file-extension: yaml
         server-addr: nacos-cs.devops:8848
         namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
-        ext-config: mysql-products-server-test.yaml,redis-test.yaml,minio-test.yaml
+        ext-config: mysql-test.yaml,redis-test.yaml,minio-test.yaml
       discovery:
         namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
         server-addr: nacos-cs.devops:8848
@@ -69,6 +69,6 @@ spring:
         file-extension: yaml
         server-addr: nacos-cs.ctfo-cloud-stable-env.svc:8848
         namespace: 314f7b8f-87f6-49dd-80d3-a91559c8f52d
-        ext-config: mysql-products-server-prod.yaml,redis-prod.yaml,minio-prod.yaml
+        ext-config: mysql-prod.yaml,redis-prod.yaml,minio-prod.yaml
       discovery:
         server-addr: nacos-cs.ctfo-cloud-stable-env.svc:8848
