@@ -1,0 +1,66 @@
+def TestServer(){
+    def remote = [:]
+    remote.name = "172.20.60.16"
+    remote.host = "172.20.60.16"
+    remote.port = 22
+    remote.allowAnyHosts = true
+    withCredentials([usernamePassword(credentialsId: 'test-master1-root', passwordVariable: 'password', usernameVariable: 'userName')]) {
+        remote.user = "${userName}"
+        remote.password = "${password}"
+    }
+    return remote
+}
+pipeline {
+    agent {
+        label 'jenkins-slave'
+    }
+    environment {
+        def DEVOPS_PIPELINE_HOME = "/jenkins_pod_data/devops_server/pipeline_home"
+    }
+    parameters { string(name: 'git_branch', defaultValue: '20201113-zmk-k8sdeploy', description: '输入需要发布的分支名称') }
+    stages {
+        stage('Java Build') {
+            steps{
+                git branch: "$git_branch",
+                url: 'https://git.ctfo.com/devops/devplatform-server.git',
+                credentialsId: 'prod-git.ctfo.com-user'
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'prod-harbor.ctfo.com-user', passwordVariable: 'harbor_password', usernameVariable: 'harbor_username')]) {
+                    sh '''
+                        ### create git-version
+                        cd deploy-k8s/jenkins;/bin/bash git-version.sh
+                        DOCKER_TAG=`cat git-version`
+                        echo $DOCKER_TAG
+                        cd ../../
+
+                        mvn clean package
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Docker Build image'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'prod-harbor.ctfo.com-user', passwordVariable: 'harbor_password', usernameVariable: 'harbor_username')]) {
+                    sh '''
+                    docker login -u $harbor_username -p $harbor_password harbor.ctfo.com
+                    DOCKER_TAG=`cat deploy-k8s/jenkins/git-version`
+                    echo $DOCKER_TAG
+                    docker build -t harbor.ctfo.com/devops/devplatform-server:$DOCKER_TAG . -f dockerfiles/test.Dockerfile
+                    docker push harbor.ctfo.com/devops/devplatform-server:$DOCKER_TAG
+                    '''
+                }
+            }
+        }
+        stage('Deploy k8s Pod') {
+            steps {
+                script {
+                def sshServer = TestServer()
+                sshPut remote: sshServer, from: "deploy-k8s/jenkins/git-version", into: "/tmp/test-server.version"
+                sshPut remote: sshServer, from: "deploy-k8s/jenkins/test-deploy-k8s.sh", into: "/tmp/test-server.sh"
+                sshCommand remote: sshServer, command: "bash -x /tmp/test-server.sh /tmp/test-server.version"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,84 @@
+### devops api.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-products-server
+  labels:
+    app: devops-products-server
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-products-server
+  template:
+    metadata:
+      labels:
+        app: devops-products-server
+    spec:
+      containers:
+        - name: devops-products-server
+          image: "harbor.ctfo.com/devops/devops-products-server-test:test-env"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 5555
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 256m
+              memory: 256Mi
+          volumeMounts:
+            - name: devops-pod-log-data
+              mountPath: "/devops/logs"
+          env:
+            - name: DEVOPS_SRPING_ACTIVE
+              value: --spring.profiles.active=test
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8282
+              scheme: HTTP
+            initialDelaySeconds: 80
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8282
+              scheme: HTTP
+            initialDelaySeconds: 80
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+      volumes:
+        - name: devops-pod-log-data
+          persistentVolumeClaim:
+            claimName: devops-products-server-pvc
+      nodeSelector:
+        devops-server-apiservice: deploy
+      tolerations:
+      - effect: NoSchedule
+        key: prod-devops-tolerations
+        operator: Exists
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-products-server-svc
+  labels:
+    app: devops-products-server
+  namespace: devops
+spec:
+  type: NodePort
+  ports:
+  - port: 8282
+    targetPort: 8282
+  selector:
+    app: devops-products-server
