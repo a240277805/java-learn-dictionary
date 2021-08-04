@@ -19,4 +19,4 @@ Dobbo 服务调用过程
 - Consumer 的负载均衡怎么做的
 
 
-![avatar](https://img-blog.csdnimg.cn/20200301232431652.jpg) 
+<img src="https://img-blog.csdnimg.cn/20200301232431652.jpg" alt="avatar" style="zoom:200%;" /> 
