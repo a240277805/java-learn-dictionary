@@ -42,3 +42,9 @@ Esc键：连续按3次显示所有的支持的终端命令。
 Tab键：命令、文件名等自动补全功能。
 
 **df命令**  **du命令**
+
+## awk 命令
+
+## 参考
+
+# [Linux三剑客之awk命令](https://www.cnblogs.com/ginvip/p/6352157.html)
