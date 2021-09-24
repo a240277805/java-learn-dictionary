@@ -57,6 +57,12 @@ kafka 会定时触发分区加平衡操作，也可以主动触发；触发后�
 - producer 采用round-robin算法 ，轮训往 partition里写入
 - 每个 consumer 都维护了自己的 offset ，就是消费到了 patition什么位置，一个patition可以供多个consumer 消费，
 
+1. 每个分区是由多个Segment组成，当Kafka要写数据到一个partition时，它会写入到状态为active的segment中。如果该segment被写满，则一个新的segment将会被新建，然后变成新的“active” segment。
+
+2.  偏移量：分区中的每一条消息都会被分配的一个连续的id值，该值用于唯一标识分区中的每一条消息。
+
+3. 每个segment中则保存了真实的消息数据。每个Segment对应于一个索引文件与一个日志文件。segment文件的生命周期是由Kafka Server的配置参数所决定的。比如说，server.properties文件中的参数项log.retention.hours=168就表示7天后删除老的消息文件。
+
 ### kafka 实现高吞吐的原理
 - 读写文件依赖OS文件系统的页缓存，而不是在JVM内部缓存数据，利用OS来缓存，内存利用率高
 - sendfile技术（零拷贝），避免了传统网络IO四步流程
@@ -95,7 +101,7 @@ kafka 会定时触发分区加平衡操作，也可以主动触发；触发后�
 
 ###  ***\*（7）Zookeeper 在 Kafka 中的作用\****
 
-   kafaka集群的 broker，和 Consumer 都需要连接 Zookeeper。Producer 直接连接 Broker，Topic 分区被放在不同的 Broker 中，保证 Producer 和 Consumer 错开访问 Broker，避免访问单个 Broker造成过度的IO压力，使得负载均衡。
+   (1.0版本)kafaka集群的 broker，和 Consumer 都需要连接 Zookeeper。Producer 直接连接 Broker，Topic 分区被放在不同的 Broker 中，保证 Producer 和 Consumer 错开访问 Broker，避免访问单个 Broker造成过度的IO压力，使得负载均衡。
 
 ### partition是如何与group对应的
 
@@ -138,6 +144,10 @@ int partition= hashCode%50
 - 重复消息。Kafka 只保证每个消息至少会送达一次，虽然几率很小，但一条消息有可能会被送达多次。 
 - 消息乱序。虽然一个Partition 内部的消息是保证有序的，但是如果一个Topic 有多个Partition，Partition 之间的消息送达不保证有序。 
 - 复杂性。Kafka需要zookeeper 集群的支持，Topic通常需要人工来创建，部署和维护较一般消息队列成本更高
+
+
+
+![img](../ImgSource/v2-f2b0e154b566e2bb573de4c9ff88544f_b.jpg)
 
 ## 部署
 
@@ -188,6 +198,17 @@ bin/kafka-console-producer.sh --broker-list 172.20.60.23:9092 --topic mykafka
 
 //创建消费者
 kafka-console-consumer.sh --bootstrap-server 172.20.60.23:9092 --topic DEVOPS_PLATFORM_EVENT_TOPIC --from-beginning
+//查看topic 分区
+kafka-topics.sh --describe --bootstrap-server 127.0.0.1:9094  --topic count
+//topic 分区增加到4个
+kafka-topics.sh --bootstrap-server 127.0.0.1:9094 --alter --topic count --partitions 4
+//topic 每个分区最新offset
+kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9094 --topic count
+//查看消费者组
+kafka-consumer-groups.sh  --bootstrap-server 127.0.0.1:9094  --list
+//查看消费者组里的消费者和消费信息
+kafka-consumer-groups.sh  --bootstrap-server 127.0.0.1:9094 --describe  --group zmk-group
+
 ```
 
 
@@ -334,3 +355,4 @@ spring.kafka.listener.ack-time;
 
 [Quick Start for Apache Kafka using Confluent Platform (Docker)](https://docs.confluent.io/platform/current/quickstart/ce-docker-quickstart.html)
 
+* ***** [Kafka-分区、片段、偏移量](https://zhuanlan.zhihu.com/p/137406991)
