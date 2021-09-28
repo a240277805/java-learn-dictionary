@@ -20,7 +20,7 @@ https://www.bridgewater.com/research-and-insights/chinas-differentiated-economic
 
 ### 词汇
 
-* outcomes 结果11
+* outcomes 结果
 
 * diversification 多元化，变化
 
