@@ -32,9 +32,18 @@ https://www.bridgewater.com/research-and-insights/chinas-differentiated-economic
 
 * predomantly  主要是，主导的
 
+* as a result of 由于，由。。。的结果
+
+* gap 缺口 间隔 间隙
+
+* effective policy response 有效的政策 应对
+
+* aggressive  气势汹汹的，咄咄逼人，侵略性的
+
 ### 语句
 
 *  first-order effects of the pandemic  大流行的一级影响
+* swift easing /coordinated across/ multiple levers/ fostered a rapid recovery.  迅速的宽松政策/协调各部分/复合杠杆/培育了迅速复苏
 
 ### 思路
 
