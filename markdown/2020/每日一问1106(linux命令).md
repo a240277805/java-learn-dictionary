@@ -1,5 +1,11 @@
 # Linux 命令
 
+## 服务器
+
+
+
+
+
 * # [Linux 查看磁盘或文件夹及文件大小](https://www.cnblogs.com/sumuncle/p/11314671.html)
 
 Esc+b 移动到当前单词的开头

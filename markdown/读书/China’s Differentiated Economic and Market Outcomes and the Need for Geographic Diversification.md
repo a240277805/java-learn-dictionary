@@ -64,6 +64,7 @@ https://www.bridgewater.com/research-and-insights/chinas-differentiated-economic
 * debt  债务
 * regulatory  监管
 * enterprises 企业 事业
+* frothy financial  泡沫 财政
 
 ### 语句
 
