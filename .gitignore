@@ -25,4 +25,9 @@
 /.nb-gradle/
 /logs
 /nohup.out
+.idea
+
+.git
+
+*.iml
 
